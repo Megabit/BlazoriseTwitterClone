@@ -1,0 +1,24 @@
+@inject TwitterDataService DataService
+
+<Div Width="Width.Px( 106 )" Height="Height.Px( 760 )" Padding="Padding.Is3.OnY" Flex="Flex.Column.JustifyContent.Between.AlignItems.Center" Border="Border.Is1.OnEnd">
+    <Div Flex="Flex.Column.AlignItems.Center" Gap="Gap.Is4">
+        <Anchor To="/" Unstyled TextColor="TextColor.Dark">
+            <Div TextSize="TextSize.Heading3" TextWeight="TextWeight.SemiBold">X</Div>
+        </Anchor>
+        <CompactNavigationButton To="/" IconName="@FluentUIIcons.HomeEmpty" />
+        <CompactNavigationButton To="/explore" IconName="@FluentUIIcons.SearchInfo" />
+        <CompactNavigationButton To="/notifications" IconName="@FluentUIIcons.AlertOn" />
+        <CompactNavigationButton To="/chat" IconName="@FluentUIIcons.ChatEmpty" />
+        <CompactNavigationButton To="/grok" IconName="@FluentUIIcons.LeafOne" />
+        <CompactNavigationButton To="/bookmarks" IconName="@FluentUIIcons.Bookmark" />
+        <CompactNavigationButton To="/creator-studio" IconName="@FluentUIIcons.Rocket" />
+        <CompactNavigationButton To="/premium" IconName="@FluentUIIcons.Premium" />
+        <CompactNavigationButton To="/profile" IconName="@FluentUIIcons.PersonCircle" />
+        <CompactNavigationButton To="/more" IconName="@FluentUIIcons.MoreHorizontal" />
+        <Button Color="Color.Dark">
+            <Icon Name="@FluentUIIcons.Compose" />
+        </Button>
+    </Div>
+
+    <Image Source="@DataService.CurrentUser.AvatarUrl" Width="Width.Rem( 2.25 )" Height="Height.Rem( 2.25 )" Border="Border.RoundedCircle" />
+</Div>

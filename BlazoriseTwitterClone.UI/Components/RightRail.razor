@@ -1,0 +1,57 @@
+<Div Width="Width.Px( 360 )" Padding="Padding.Is3.OnX.Is1.OnY" Flex="Flex.Column" Gap="Gap.Is3">
+    <TextEdit Placeholder="Search" Role="TextRole.Search" />
+
+    <Card Border="Border.Is1">
+        <CardBody Padding="Padding.Is3">
+            <Div TextSize="TextSize.Heading5" TextWeight="TextWeight.Bold" Margin="Margin.Is2.FromBottom">What's happening</Div>
+            @foreach ( var trend in Trends )
+            {
+                <Div Padding="Padding.Is2.OnY">
+                    <Div TextSize="TextSize.Small" TextColor="TextColor.Muted">@trend.Category</Div>
+                    <Div TextWeight="TextWeight.Bold">@trend.Title</Div>
+                    @if ( !string.IsNullOrWhiteSpace( trend.Posts ) )
+                    {
+                        <Div TextSize="TextSize.Small" TextColor="TextColor.Muted">@trend.Posts</Div>
+                    }
+                </Div>
+            }
+            <Anchor To="#" Unstyled TextColor="TextColor.Primary">Show more</Anchor>
+        </CardBody>
+    </Card>
+
+    <Card Border="Border.Is1">
+        <CardBody Padding="Padding.Is3">
+            <Div TextSize="TextSize.Heading5" TextWeight="TextWeight.Bold" Margin="Margin.Is2.FromBottom">Who to follow</Div>
+            @foreach ( var suggestion in Suggestions )
+            {
+                <Div Flex="Flex.AlignItems.Center.JustifyContent.Between" Padding="Padding.Is2.OnY">
+                    <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is2">
+                        <Image Source="@suggestion.AvatarUrl" Width="Width.Rem( 2.25 )" Height="Height.Rem( 2.25 )" Border="Border.RoundedCircle" />
+                        <Div>
+                            <Div TextWeight="TextWeight.Bold">
+                                @suggestion.Name
+                                @if ( suggestion.Verified )
+                                {
+                                    <Span TextColor="TextColor.Primary">●</Span>
+                                }
+                            </Div>
+                            <Div TextSize="TextSize.Small" TextColor="TextColor.Muted">@suggestion.Handle</Div>
+                        </Div>
+                    </Div>
+                    <Button Color="Color.Dark" Size="Size.Small" TextWeight="TextWeight.Bold">Follow</Button>
+                </Div>
+            }
+            <Anchor To="#" Unstyled TextColor="TextColor.Primary">Show more</Anchor>
+        </CardBody>
+    </Card>
+
+    <Div TextSize="TextSize.Small" TextColor="TextColor.Muted" Padding="Padding.Is2.OnX">
+        Terms of Service | Privacy Policy | Cookie Policy | More | © 2026 X Corp.
+    </Div>
+</Div>
+
+@code {
+    [Parameter] public IReadOnlyList<Trend> Trends { get; set; } = [];
+
+    [Parameter] public IReadOnlyList<FollowSuggestion> Suggestions { get; set; } = [];
+}

@@ -1,0 +1,47 @@
+﻿<ListGroupItem Flex="Flex.Default.NoWrap" Name="@Key" Color="@ItemColor" @onclick="@Clicked" Style="cursor: pointer;">
+    <Div Style="opacity: 0.8;" Width="Width.Rem( 2 )" Height="Height.Rem( 2 )" Border="Border.RoundedCircle" Flex="Flex.AlignItems.Center.JustifyContent.Center.Shrink.Is0" Background="@InitialsBackground" TextColor="TextColor.White" TextWeight="TextWeight.SemiBold">
+        @FromInitials
+    </Div>
+    <Div Flex="Flex.Column.NoWrap" Overflow="Overflow.Hidden" Padding="Padding.Is2.FromStart">
+        <Div Flex="Flex.Default">
+            @FirstName @LastName
+        </Div>
+        @if ( Company != null )
+        {
+            <Div Flex="Flex.Default">
+                <Span TextColor="TextColor.Muted" TextSize="TextSize.Small">
+                    @Company
+                </Span>
+            </Div>
+        }
+    </Div>
+</ListGroupItem>
+
+@code {
+    string FromInitials => string.IsNullOrWhiteSpace( FirstName ) && string.IsNullOrWhiteSpace( LastName ) ? "?" : new string( ( FirstName?.FirstOrDefault().ToString() ?? "" ) + ( LastName?.FirstOrDefault().ToString() ?? "" ) ).ToUpperInvariant();
+
+    Background InitialsBackground => FromInitials switch
+    {
+        "A" or "B" or "C" or "D" or "E" or "F" => Background.Danger,
+        "G" or "H" or "I" or "J" or "K" or "L" => Background.Warning,
+        "M" or "N" or "O" or "P" or "Q" or "R" => Background.Success,
+        "S" or "T" or "U" or "V" or "W" => Background.Info,
+        _ => Background.Primary,
+    };
+
+    Color ItemColor => Key == SelectedContactKey ? Color.Primary : Color.Default;
+
+    [CascadingParameter( Name = "SelectedContactKey" )] public string SelectedContactKey { get; set; }
+
+    [Parameter] public string Key { get; set; }
+
+    [Parameter] public string FirstName { get; set; }
+
+    [Parameter] public string LastName { get; set; }
+
+    [Parameter] public string Company { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    [Parameter] public EventCallback Clicked { get; set; }
+}

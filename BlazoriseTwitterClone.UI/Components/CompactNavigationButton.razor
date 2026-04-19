@@ -1,0 +1,11 @@
+<Anchor To="@To" Unstyled TextColor="TextColor.Dark">
+    <Div Padding="Padding.Is2">
+        <Icon Name="@IconName" IconSize="IconSize.Large" />
+    </Div>
+</Anchor>
+
+@code {
+    [Parameter] public string To { get; set; } = "/";
+
+    [Parameter] public string IconName { get; set; } = string.Empty;
+}

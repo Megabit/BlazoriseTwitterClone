@@ -1,0 +1,10 @@
+<Div Flex="Flex.AlignItems.Center" Gap="Gap.Is1">
+    <Icon Name="@IconName" />
+    <Span TextSize="TextSize.Small">@Value</Span>
+</Div>
+
+@code {
+    [Parameter] public string IconName { get; set; } = string.Empty;
+
+    [Parameter] public string Value { get; set; } = string.Empty;
+}

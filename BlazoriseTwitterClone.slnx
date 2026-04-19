@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="BlazoriseTwitterClone.Data/BlazoriseTwitterClone.Data.csproj" />
+  <Project Path="BlazoriseTwitterClone.Models/BlazoriseTwitterClone.Models.csproj" />
+  <Project Path="BlazoriseTwitterClone.UI/BlazoriseTwitterClone.UI.csproj" />
+  <Project Path="BlazoriseTwitterClone/BlazoriseTwitterClone.csproj" />
+</Solution>

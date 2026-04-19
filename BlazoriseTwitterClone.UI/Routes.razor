@@ -1,0 +1,24 @@
+@using Microsoft.AspNetCore.Components.Routing
+
+<CascadingValue Value="@appState">
+    <Router AppAssembly="typeof( Pages.HomePage ).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="routeData" DefaultLayout="typeof( Layout.MainLayout )" />
+            <FocusOnNavigate RouteData="routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <LayoutView Layout="typeof( Layout.MainLayout )">
+                <Div Border="Border.Is1.OnEnd.Is1.OnStart" Width="Width.Px( 520 )" Height="Height.Px( 760 )" Flex="Flex.AlignItems.Center.JustifyContent.Center" TextColor="TextColor.Muted">
+                    Page not found
+                </Div>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingValue>
+
+@code {
+    private readonly ApplicationState appState = new()
+    {
+        CurrentPage = "home",
+    };
+}

@@ -1,0 +1,27 @@
+<Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.Default.NoWrap" Gap="Gap.Is3">
+    <Div TextColor="@(Item.Type == "liked" ? TextColor.Danger : TextColor.Primary)" TextSize="TextSize.Heading5">
+        <Icon Name="@(Item.Type == "liked" ? FluentUIIcons.HeartFilled : FluentUIIcons.ArrowReply)" />
+    </Div>
+    <Div Flex="Flex.Column" Width="Width.Is100">
+        <Image Source="@Item.AvatarUrl" Width="Width.Rem( 2.25 )" Height="Height.Rem( 2.25 )" Border="Border.RoundedCircle" />
+        <Div Margin="Margin.Is2.FromTop">
+            <Span TextWeight="TextWeight.Bold">@Item.Actor</Span>
+            @if ( Item.Verified )
+            {
+                <Span TextColor="TextColor.Primary">●</Span>
+            }
+            <Span TextColor="TextColor.Muted"> @Item.Type your post · @Item.Time</Span>
+        </Div>
+        <Div TextColor="TextColor.Muted" Margin="Margin.Is1.FromTop">
+            @foreach ( var line in Item.Body.Split( '\n' ) )
+            {
+                <Div>@line</Div>
+            }
+        </Div>
+    </Div>
+    <Icon Name="@FluentUIIcons.MoreHorizontal" TextColor="TextColor.Muted" />
+</Div>
+
+@code {
+    [Parameter, EditorRequired] public NotificationItem Item { get; set; } = default!;
+}

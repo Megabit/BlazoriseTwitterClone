@@ -1,0 +1,14 @@
+@page "/"
+@inject TwitterDataService DataService
+
+<Div Border="Border.Is1.OnBottom">
+    <Div Flex="Flex.AlignItems.Center.JustifyContent.Center" Padding="Padding.Is2.OnY">
+        <Div Width="Width.Is50" TextWeight="TextWeight.SemiBold" TextColor="TextColor.Muted" Flex="Flex.JustifyContent.Center">For you</Div>
+        <Div Width="Width.Is50" TextWeight="TextWeight.Bold" Flex="Flex.JustifyContent.Center">Following</Div>
+    </Div>
+</Div>
+
+@foreach ( var tweet in DataService.HomeTimeline )
+{
+    <TweetCard Tweet="@tweet" />
+}

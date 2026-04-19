@@ -1,0 +1,20 @@
+<Div Padding="Padding.Is3.OnX.Is2.OnY" Border="Border.Is1.OnBottom" Flex="Flex.Default.NoWrap" Gap="Gap.Is2">
+    <Image Source="@Conversation.AvatarUrl" Width="Width.Rem( 2.75 )" Height="Height.Rem( 2.75 )" Border="Border.RoundedCircle" />
+    <Div Width="Width.Is100" Flex="Flex.Column">
+        <Div Flex="Flex.AlignItems.Center.JustifyContent.Between">
+            <Div>
+                <Span TextWeight="TextWeight.Bold">@Conversation.Name</Span>
+                @if ( Conversation.Verified )
+                {
+                    <Span TextColor="TextColor.Primary">●</Span>
+                }
+            </Div>
+            <Span TextColor="TextColor.Muted" TextSize="TextSize.Small">@Conversation.Age</Span>
+        </Div>
+        <Div TextColor="TextColor.Muted">@Conversation.Preview</Div>
+    </Div>
+</Div>
+
+@code {
+    [Parameter, EditorRequired] public Conversation Conversation { get; set; } = default!;
+}

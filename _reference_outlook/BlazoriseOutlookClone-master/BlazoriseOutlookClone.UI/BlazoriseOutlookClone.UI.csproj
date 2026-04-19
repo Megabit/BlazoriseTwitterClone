@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazorise.Components" Version="2.1.0" />
+    <PackageReference Include="Blazorise.FluentUI2" Version="2.1.0" />
+    <PackageReference Include="Blazorise.Splitter" Version="2.1.0" />
+    <PackageReference Include="Blazorise.Scheduler" Version="2.1.0" />
+    <PackageReference Include="Blazorise.RichTextEdit" Version="2.1.0" />
+    <PackageReference Include="Blazorise.Icons.FluentUI" Version="2.1.0" />
+
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazoriseOutlookClone.Data\BlazoriseOutlookClone.Data.csproj" />
+    <ProjectReference Include="..\BlazoriseOutlookClone.Models\BlazoriseOutlookClone.Models.csproj" />
+  </ItemGroup>
+
+</Project>

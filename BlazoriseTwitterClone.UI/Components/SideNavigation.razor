@@ -1,0 +1,38 @@
+@inject TwitterDataService DataService
+
+<Div Width="Width.Px( 280 )" Height="Height.Px( 760 )" Padding="Padding.Is4.OnX.Is2.OnY" Flex="Flex.Column.JustifyContent.Between" Border="Border.Is1.OnEnd">
+    <Div Flex="Flex.Column" Gap="Gap.Is2">
+        <Anchor To="/" Unstyled TextColor="TextColor.Dark">
+            <Div TextSize="TextSize.Heading3" TextWeight="TextWeight.SemiBold" Padding="Padding.Is2.OnX">X</Div>
+        </Anchor>
+
+        <NavigationItem To="/" IconName="@FluentUIIcons.HomeEmpty" Label="Home" />
+        <NavigationItem To="/explore" IconName="@FluentUIIcons.SearchInfo" Label="Explore" />
+        <NavigationItem To="/notifications" IconName="@FluentUIIcons.AlertOn" Label="Notifications" />
+        <NavigationItem To="/chat" IconName="@FluentUIIcons.ChatEmpty" Label="Chat" />
+        <NavigationItem To="/grok" IconName="@FluentUIIcons.LeafOne" Label="Grok" />
+        <NavigationItem To="/bookmarks" IconName="@FluentUIIcons.Bookmark" Label="Bookmarks" />
+        <NavigationItem To="/creator-studio" IconName="@FluentUIIcons.Rocket" Label="Creator Studio" />
+        <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" Padding="Padding.Is2.OnY">
+            <NavigationItem To="/premium" IconName="@FluentUIIcons.Premium" Label="Premium" />
+            <Badge Color="Color.Info">50% off</Badge>
+        </Div>
+        <NavigationItem To="/profile" IconName="@FluentUIIcons.PersonCircle" Label="Profile" />
+        <NavigationItem To="/more" IconName="@FluentUIIcons.MoreHorizontal" Label="More" />
+
+        <Button Color="Color.Dark" Width="Width.Is100" Margin="Margin.Is4.FromTop" TextWeight="TextWeight.Bold">
+            Post
+        </Button>
+    </Div>
+
+    <Div Flex="Flex.AlignItems.Center.JustifyContent.Between" Padding="Padding.Is2">
+        <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is2">
+            <Image Source="@DataService.CurrentUser.AvatarUrl" Width="Width.Rem( 2.25 )" Height="Height.Rem( 2.25 )" Border="Border.RoundedCircle" />
+            <Div>
+                <Div TextWeight="TextWeight.Bold">@DataService.CurrentUser.DisplayName</Div>
+                <Div TextColor="TextColor.Muted" TextSize="TextSize.Small">@DataService.CurrentUser.Handle</Div>
+            </Div>
+        </Div>
+        <Icon Name="@FluentUIIcons.MoreHorizontal" />
+    </Div>
+</Div>

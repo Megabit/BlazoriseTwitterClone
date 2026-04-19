@@ -1,0 +1,51 @@
+@page "/profile"
+@inject TwitterDataService DataService
+
+<Div Border="Border.Is1.OnBottom">
+    <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" Padding="Padding.Is2.OnX.Is1.OnY">
+        <Anchor To="/" Unstyled TextColor="TextColor.Dark"><Icon Name="@FluentUIIcons.ArrowLeft" /></Anchor>
+        <Div>
+            <Div TextWeight="TextWeight.Bold" TextSize="TextSize.Large">@DataService.CurrentUser.DisplayName</Div>
+            <Div TextColor="TextColor.Muted" TextSize="TextSize.Small">@DataService.CurrentUser.Posts.ToString( "N0" ) posts</Div>
+        </Div>
+    </Div>
+</Div>
+
+<Div>
+    <Image Source="@DataService.CurrentUser.BannerUrl" Width="Width.Is100" Height="Height.Px( 170 )" />
+    <Div Padding="Padding.Is3" Border="Border.Is1.OnBottom">
+        <Div Flex="Flex.JustifyContent.Between.AlignItems.Start">
+            <Image Source="@DataService.CurrentUser.AvatarUrl" Width="Width.Rem( 6.5 )" Height="Height.Rem( 6.5 )" Border="Border.RoundedCircle" Margin="Margin.Is5.FromTop" />
+            <Button Color="Color.Light" TextWeight="TextWeight.Bold">Edit profile</Button>
+        </Div>
+        <Div TextSize="TextSize.Heading5" TextWeight="TextWeight.Bold">@DataService.CurrentUser.DisplayName</Div>
+        <Div TextColor="TextColor.Muted">@DataService.CurrentUser.Handle</Div>
+        <Div Margin="Margin.Is3.FromTop">@DataService.CurrentUser.Bio</Div>
+        <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" TextColor="TextColor.Muted" Margin="Margin.Is2.FromTop">
+            <Span><Icon Name="@FluentUIIcons.Location" /> @DataService.CurrentUser.Location</Span>
+            <Span><Icon Name="@FluentUIIcons.Link" /> @DataService.CurrentUser.Website</Span>
+            <Span>@DataService.CurrentUser.Birthday</Span>
+        </Div>
+        <Div TextColor="TextColor.Muted" Margin="Margin.Is1.FromTop">@DataService.CurrentUser.Joined</Div>
+        <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" Margin="Margin.Is3.FromTop">
+            <Span><Span TextWeight="TextWeight.Bold">@DataService.CurrentUser.Following</Span> <Span TextColor="TextColor.Muted">Following</Span></Span>
+            <Span><Span TextWeight="TextWeight.Bold">@DataService.CurrentUser.Followers</Span> <Span TextColor="TextColor.Muted">Followers</Span></Span>
+        </Div>
+    </Div>
+</Div>
+
+<Div Border="Border.Is1.OnBottom">
+    <Div Flex="Flex.JustifyContent.Between" Padding="Padding.Is3.OnX.Is2.OnY" TextWeight="TextWeight.SemiBold">
+        <Span>Posts</Span>
+        <Span TextColor="TextColor.Muted">Replies</Span>
+        <Span TextColor="TextColor.Muted">Highlights</Span>
+        <Span TextColor="TextColor.Muted">Articles</Span>
+        <Span TextColor="TextColor.Muted">Media</Span>
+        <Span TextColor="TextColor.Muted">Likes</Span>
+    </Div>
+</Div>
+
+@foreach ( var tweet in DataService.ProfilePosts )
+{
+    <TweetCard Tweet="@tweet" />
+}

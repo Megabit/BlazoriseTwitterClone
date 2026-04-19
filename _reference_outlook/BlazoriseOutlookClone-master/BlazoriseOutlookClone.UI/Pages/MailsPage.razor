@@ -1,0 +1,168 @@
+﻿@page "/"
+@page "/mail"
+@using BlazoriseOutlookClone.Data
+@implements IDisposable
+<Row>
+    <Column>
+        <TopBarMenu>
+            <NewItemContent>
+                <Dropdown DropdownMenuTargetId="new-mail-button">
+                    <Button ElementId="new-mail-button" Color="Color.Primary" Display="Display.InlineBlock" Clicked="@OnNewMailClicked">
+                        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.MailAdd" IconStyle="IconStyle.Regular" Margin="Margin.Is2" />
+                        <Span>New mail</Span>
+                    </Button>
+                    <DropdownToggle Color="Color.Primary" Split />
+                    <DropdownMenu >
+                        <DropdownItem>
+                            <Icon Name="IconName.MailOpen" IconSize="IconSize.Large" />
+                            Mail
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Icon Name="IconName.Calendar" />Event
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Icon Name="IconName.Users" />Group
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </NewItemContent>
+            <HomeContent>
+                <TopBarButton IconName="IconName.Delete">Delete</TopBarButton>
+                <TopBarButton IconName="IconName.Archive" IconColor="TextColor.Success">Archive</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ShieldError" IconColor="TextColor.Danger">Report</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Broom">Sweep</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowReply" IconColor="@("purple")">Reply</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowReplyAll" IconColor="@("purple")">Reply All</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowForward" IconColor="TextColor.Primary">Forward</TopBarButton>
+            </HomeContent>
+            <ViewContent>
+                <TopBarButton IconName="IconName.Settings" IconColor="TextColor.Primary">View settings</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Mail">Messages</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.List">Expand conversation</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ZoomIn">Zoom</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowSync">Sync</TopBarButton>
+            </ViewContent>
+            <HelpContent>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Question" IconColor="TextColor.Warning">Help</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Lightbulb" IconColor="TextColor.Primary">Tips</TopBarButton>
+                <TopBarButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.PersonFeedback" IconColor="TextColor.Success">Feedback</TopBarButton>
+            </HelpContent>
+        </TopBarMenu>
+    </Column>
+</Row>
+<Row>
+    @if ( ApplicationState.SidebarVisible )
+    {
+        <Column ColumnSize="ColumnSize.Is2" Flex="Flex.Column" Padding="Padding.Is2.OnY">
+            <SideBarMenu>
+                <SideBarGroup Caption="Favorites">
+                    @foreach ( var folder in FolderService.GetAllFolders().Where( x => x.Favorite ) )
+                    {
+                        <SideBarButton IconName="@folder.IconName" Name="@folder.Name" UnreadCount="@folder.UnreadCount" />
+                    }
+                </SideBarGroup>
+            </SideBarMenu>
+
+            <SideBarMenu>
+                <SideBarGroup Caption="John Doe">
+                    @foreach ( var folder in FolderService.GetAllFolders() )
+                    {
+                        <SideBarButton IconName="@folder.IconName" Name="@folder.Name" UnreadCount="@folder.UnreadCount" />
+                    }
+                </SideBarGroup>
+            </SideBarMenu>
+        </Column>
+    }
+    <Column ColumnSize="ColumnSize.Is3" Padding="Padding.Is2.OnY.Is2.FromEnd">
+        <Card>
+            <CardBody Border="Border.Is1.OnBottom" Flex="Flex.Default.JustifyContent.Between.AlignItems.Center" Height="Height.Rem( 3 )">
+                <Div>
+                    <Tabs SelectedTab="focused">
+                        <Items>
+                            <Tab Name="focused">Focused</Tab>
+                            <Tab Name="other">Other</Tab>
+                        </Items>
+                    </Tabs>
+                </Div>
+                <Div>
+                    <IconButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.SelectAllOff" />
+                    <IconButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowCurveDownLeft" />
+                    <IconButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.Filter" />
+                    <IconButton IconName="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowSort" />
+                </Div>
+            </CardBody>
+            <CardBody Padding="Padding.Is0">
+                <MailList Mails="@MailService.GetAllMails()" MailKeySelected="@OnMailKeySelected" />
+            </CardBody>
+        </Card>
+    </Column>
+    <Column ColumnSize="@(ApplicationState.SidebarVisible ? ColumnSize.Is7 : ColumnSize.Is9)" Padding="Padding.Is2.OnY.Is2.FromStart">
+        @if ( selectedMail != null && currentViewMode == ViewMode.Detail )
+        {
+            <MailRead FromName="@selectedMail.FromName" FromEmail="@selectedMail.FromEmail" Subject="@selectedMail.Subject" Body="@selectedMail.Body" IsRead="@selectedMail.IsRead" />
+        }
+        else if ( selectedMail == null && currentViewMode == ViewMode.Compose )
+        {
+            <MailCompose />
+        }
+        else
+        {
+            <Div Flex="Flex.Default.AlignItems.Center.JustifyContent.Center" Height="Height.Px( 800 )" TextColor="TextColor.Muted" TextSize="TextSize.Large">
+                Select an email to read
+            </Div>
+        }
+    </Column>
+</Row>
+
+@code {
+    [Inject] private MailService MailService { get; set; }
+
+    [Inject] private FolderService FolderService { get; set; }
+
+    [CascadingParameter] private ApplicationState ApplicationState { get; set; }
+
+    MailInfo selectedMail;
+    string selectedMailKey;
+    ViewMode currentViewMode = ViewMode.Detail;
+
+    enum ViewMode
+    {
+        Detail,
+        Compose
+    }
+
+    Task OnNewMailClicked()
+    {
+        currentViewMode = ViewMode.Compose;
+        selectedMailKey = null;
+        selectedMail = null;
+
+        return Task.CompletedTask;
+    }
+
+    Task OnMailKeySelected( string key )
+    {
+        currentViewMode = ViewMode.Detail;
+        selectedMailKey = key;
+        selectedMail = MailService.GetAllMails().FirstOrDefault( x => x.Key == selectedMailKey );
+
+        return Task.CompletedTask;
+    }
+
+    protected override void OnInitialized()
+    {
+        ApplicationState.SidebarVisibilityChanged += OnSidebarVisibilityChanged;
+
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        ApplicationState.SidebarVisibilityChanged -= OnSidebarVisibilityChanged;
+    }
+
+    private void OnSidebarVisibilityChanged( bool visible )
+    {
+        InvokeAsync( StateHasChanged );
+    }
+}

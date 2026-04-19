@@ -1,0 +1,30 @@
+@inject NavigationManager NavigationManager
+
+<Anchor To="@To" Unstyled TextColor="TextColor.Dark">
+    <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" Padding="Padding.Is2.OnY">
+        <Icon Name="@IconName" IconSize="IconSize.Large" />
+        <Span TextSize="TextSize.Large" TextWeight="@CurrentWeight">@Label</Span>
+    </Div>
+</Anchor>
+
+@code {
+    private TextWeight CurrentWeight => IsActive ? TextWeight.Bold : TextWeight.Default;
+
+    private bool IsActive
+    {
+        get
+        {
+            var relative = NavigationManager.ToBaseRelativePath( NavigationManager.Uri );
+            if ( string.IsNullOrEmpty( relative ) )
+                return To == "/";
+
+            return To.TrimStart( '/' ).Equals( relative.TrimEnd( '/' ), StringComparison.OrdinalIgnoreCase );
+        }
+    }
+
+    [Parameter] public string To { get; set; } = "/";
+
+    [Parameter] public string IconName { get; set; } = string.Empty;
+
+    [Parameter] public string Label { get; set; } = string.Empty;
+}

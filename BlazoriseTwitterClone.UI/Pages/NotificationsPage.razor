@@ -1,0 +1,19 @@
+@page "/notifications"
+@inject TwitterDataService DataService
+
+<Div Border="Border.Is1.OnBottom">
+    <Div Flex="Flex.AlignItems.Center.JustifyContent.Between" Padding="Padding.Is3.OnX.Is2.OnY">
+        <Div TextSize="TextSize.Heading5" TextWeight="TextWeight.Bold">Notifications</Div>
+        <Icon Name="@FluentUIIcons.Settings" />
+    </Div>
+    <Div Flex="Flex.JustifyContent.Between" Padding="Padding.Is3.OnX.Is2.OnY" TextWeight="TextWeight.SemiBold">
+        <Span>All</Span>
+        <Span TextColor="TextColor.Muted">Priority</Span>
+        <Span TextColor="TextColor.Muted">Mentions</Span>
+    </Div>
+</Div>
+
+@foreach ( var item in DataService.Notifications )
+{
+    <NotificationRow Item="@item" />
+}

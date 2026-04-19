@@ -1,0 +1,51 @@
+<Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.Default.NoWrap" Gap="Gap.Is2">
+    <Image Source="@Tweet.AvatarUrl" Width="Width.Rem( 2.5 )" Height="Height.Rem( 2.5 )" Border="Border.RoundedCircle" />
+    <Div Flex="Flex.Column" Width="Width.Is100">
+        <Div Flex="Flex.AlignItems.Center.JustifyContent.Between">
+            <Div>
+                <Span TextWeight="TextWeight.Bold">@Tweet.Author</Span>
+                @if ( Tweet.Verified )
+                {
+                    <Span TextColor="TextColor.Primary">●</Span>
+                }
+                <Span TextColor="TextColor.Muted"> @Tweet.Handle · @Tweet.Time</Span>
+            </Div>
+            <Icon Name="@FluentUIIcons.MoreHorizontal" TextColor="TextColor.Muted" />
+        </Div>
+
+        <Div Margin="Margin.Is1.FromTop">
+            @foreach ( var line in Tweet.Body.Split( '\n' ) )
+            {
+                <Div>@line</Div>
+            }
+        </Div>
+
+        @if ( !string.IsNullOrWhiteSpace( Tweet.QuotedBody ) )
+        {
+            <Card Border="Border.Is1" Margin="Margin.Is3.FromTop">
+                <CardBody Padding="Padding.Is3">
+                    <Div>
+                        <Span TextWeight="TextWeight.Bold">@Tweet.QuotedAuthor</Span>
+                        <Span TextColor="TextColor.Muted"> @Tweet.QuotedHandle</Span>
+                    </Div>
+                    <Div TextColor="TextColor.Dark">@Tweet.QuotedBody</Div>
+                </CardBody>
+            </Card>
+        }
+
+        <Div Flex="Flex.JustifyContent.Between" TextColor="TextColor.Muted" Margin="Margin.Is3.FromTop" Padding="Padding.Is1.FromEnd">
+            <TweetMetric IconName="@FluentUIIcons.Comment" Value="@Tweet.Replies.ToString()" />
+            <TweetMetric IconName="@FluentUIIcons.ArrowRepeatAll" Value="@Tweet.Reposts.ToString()" />
+            <TweetMetric IconName="@FluentUIIcons.Heart" Value="@Tweet.Likes.ToString()" />
+            <TweetMetric IconName="@FluentUIIcons.ChartMultiple" Value="@Tweet.Views" />
+            <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3">
+                <Icon Name="@FluentUIIcons.Bookmark" />
+                <Icon Name="@FluentUIIcons.Share" />
+            </Div>
+        </Div>
+    </Div>
+</Div>
+
+@code {
+    [Parameter, EditorRequired] public Tweet Tweet { get; set; } = default!;
+}
