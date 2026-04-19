@@ -1,4 +1,4 @@
-@page "/chat"
+﻿@page "/chat"
 @layout BlazoriseTwitterClone.UI.Layout.ChatLayout
 @inject TwitterDataService DataService
 
@@ -11,7 +11,7 @@
         </Div>
     </Div>
     <Div Padding="Padding.Is3.OnX.Is2.FromBottom">
-        <TextEdit Placeholder="Search" Role="TextRole.Search" />
+        <TextInput Placeholder="Search" Role="TextRole.Search" />
     </Div>
     <Div Flex="Flex.Column">
         @foreach ( var conversation in DataService.Conversations )
