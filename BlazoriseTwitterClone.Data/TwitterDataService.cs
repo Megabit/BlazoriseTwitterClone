@@ -203,11 +203,59 @@ public sealed class TwitterDataService
         return GetAllTweets().FirstOrDefault( tweet => tweet.Id == id );
     }
 
-    public IReadOnlyList<Tweet> GetRepliesFor( string id )
+    public IReadOnlyList<PostComment> GetCommentsFor( string id )
     {
-        return GetAllTweets()
-            .Where( tweet => tweet.Id != id )
-            .Take( 4 )
-            .ToList();
+        var tweet = GetTweetById( id );
+        var replyTarget = tweet?.Handle ?? "@post";
+
+        return
+        [
+            new(
+                $"{id}-comment-1",
+                "Ivy Lane",
+                "@ivylane",
+                "18m",
+                "https://api.dicebear.com/9.x/initials/svg?seed=Ivy%20Lane",
+                $"Replying to {replyTarget}\nThis is the kind of thread that makes the tradeoffs visible. The tool can be useful and the social noise around it can still be exhausting.",
+                1,
+                2,
+                14,
+                "248",
+                true ),
+            new(
+                $"{id}-comment-2",
+                "Nico Vale",
+                "@nicovale",
+                "32m",
+                "https://api.dicebear.com/9.x/initials/svg?seed=Nico%20Vale",
+                $"Replying to {replyTarget}\nI keep coming back to incentives. The best tools get adopted quickly, but the conversations around them often move faster than the facts.",
+                0,
+                1,
+                9,
+                "190" ),
+            new(
+                $"{id}-comment-3",
+                "Sage Porter",
+                "@sageporter",
+                "1h",
+                "https://api.dicebear.com/9.x/initials/svg?seed=Sage%20Porter",
+                $"Replying to {replyTarget}\nThe practical answer is usually boring: use the useful parts, ignore the noise, and document the boundaries for the team.",
+                2,
+                4,
+                31,
+                "612",
+                true ),
+            new(
+                $"{id}-comment-4",
+                "Remy Hart",
+                "@remyhart",
+                "2h",
+                "https://api.dicebear.com/9.x/initials/svg?seed=Remy%20Hart",
+                $"Replying to {replyTarget}\nA lot of this feels like separating product quality from personality. That is simple to say and harder to do in public.",
+                0,
+                0,
+                6,
+                "104" )
+        ];
     }
 }

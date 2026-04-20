@@ -37,6 +37,19 @@ public sealed record Tweet(
 public sealed record PollOption(
     string Label );
 
+public sealed record PostComment(
+    string Id,
+    string Author,
+    string Handle,
+    string Time,
+    string AvatarUrl,
+    string Body,
+    int Replies,
+    int Reposts,
+    int Likes,
+    string Views,
+    bool Verified = false );
+
 public sealed record Trend(
     string Category,
     string Title,

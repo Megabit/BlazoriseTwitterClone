@@ -47,9 +47,42 @@ else
         Relevant
     </Div>
 
-    @foreach ( var reply in DataService.GetRepliesFor( tweet.Id ) )
+    @foreach ( var comment in DataService.GetCommentsFor( tweet.Id ) )
     {
-        <TweetCard Tweet="@reply" />
+        <Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.Default.NoWrap" Gap="Gap.Is2">
+            <Image Source="@comment.AvatarUrl" Width="Width.Rem( 2.5 )" Height="Height.Rem( 2.5 )" Border="Border.RoundedCircle" />
+            <Div Flex="Flex.Column" Width="Width.Is100">
+                <Div Flex="Flex.AlignItems.Center.JustifyContent.Between">
+                    <Div>
+                        <Span TextWeight="TextWeight.Bold">@comment.Author</Span>
+                        @if ( comment.Verified )
+                        {
+                            <Span TextColor="TextColor.Primary">*</Span>
+                        }
+                        <Span TextColor="TextColor.Muted"> @comment.Handle - @comment.Time</Span>
+                    </Div>
+                    <Icon Name="@FluentUIIcons.MoreHorizontal" TextColor="TextColor.Muted" />
+                </Div>
+
+                <Div Margin="Margin.Is1.FromTop">
+                    @foreach ( var line in comment.Body.Split( '\n' ) )
+                    {
+                        <Div TextColor="@(line.StartsWith( "Replying to ", StringComparison.Ordinal ) ? TextColor.Muted : TextColor.Default)">@line</Div>
+                    }
+                </Div>
+
+                <Div Flex="Flex.JustifyContent.Between" TextColor="TextColor.Secondary" Margin="Margin.Is3.FromTop" Padding="Padding.Is1.FromEnd">
+                    <TweetMetric IconName="@FluentUIIcons.Comment" Value="@comment.Replies.ToString()" />
+                    <TweetMetric IconName="@FluentUIIcons.ArrowRepeatAll" Value="@comment.Reposts.ToString()" />
+                    <TweetMetric IconName="@FluentUIIcons.Heart" Value="@comment.Likes.ToString()" />
+                    <TweetMetric IconName="@FluentUIIcons.ChartMultiple" Value="@comment.Views" />
+                    <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3">
+                        <Icon Name="@FluentUIIcons.Bookmark" />
+                        <Icon Name="@FluentUIIcons.Share" />
+                    </Div>
+                </Div>
+            </Div>
+        </Div>
     }
 }
 
