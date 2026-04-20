@@ -1,4 +1,5 @@
 @inject TwitterDataService DataService
+@inject IModalService ModalService
 
 <Div Width="Width.Px( 280 )" Height="Height.Vh( 100 )" Position="Position.Sticky.Top.Is0" Overflow="Overflow.Auto" Padding="Padding.Is4.OnX.Is2.OnY" Flex="Flex.Column.JustifyContent.Between" Border="Border.Is1.OnEnd">
     <Div Flex="Flex.Column" Gap="Gap.Is2">
@@ -20,7 +21,12 @@
         <NavigationItem To="/profile" IconName="@FluentUIIcons.PersonCircle" Label="Profile" />
         <NavigationItem To="/more" IconName="@FluentUIIcons.MoreHorizontal" Label="More" />
 
-        <Button Color="Color.Dark" Width="Width.Is100" Margin="Margin.Is4.FromTop" TextWeight="TextWeight.Bold">
+        <Button Color="Color.Dark"
+                Size="Size.Large"
+                Border="Border.RoundedPill"
+                Margin="Margin.Is4.FromTop"
+                TextWeight="TextWeight.Bold"
+                Clicked="@ShowCompose">
             Post
         </Button>
     </Div>
@@ -36,3 +42,14 @@
         <Icon Name="@FluentUIIcons.MoreHorizontal" IconSize="IconSize.Large" />
     </Div>
 </Div>
+
+@code {
+    private Task ShowCompose()
+    {
+        return ModalService.Show<ComposePostModal>( string.Empty, new ModalInstanceOptions
+        {
+            UseModalStructure = false,
+            Centered = true,
+        } );
+    }
+}
