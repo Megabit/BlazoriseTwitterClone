@@ -21,7 +21,7 @@
                     <Anchor To="@PostUrl" Title="@($"Open post by {Tweet.Author}")" Stretched></Anchor>
                 }
             </Div>
-            <Icon Name="@FluentUIIcons.MoreHorizontal" TextColor="TextColor.Muted" />
+            <Icon Name="@FluentUIIcons.MoreHorizontal" TextColor="TextColor.Muted" IconSize="IconSize.Large" />
         </Div>
 
         <Div Position="Position.Relative" Margin="Margin.Is1.FromTop">
@@ -71,8 +71,8 @@
             <TweetMetric IconName="@FluentUIIcons.Heart" Value="@Tweet.Likes.ToString()" />
             <TweetMetric IconName="@FluentUIIcons.ChartMultiple" Value="@Tweet.Views" />
             <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3">
-                <Icon Name="@FluentUIIcons.Bookmark" />
-                <Icon Name="@FluentUIIcons.Share" />
+                <Icon Name="@FluentUIIcons.Bookmark" IconSize="IconSize.Large" />
+                <Icon Name="@FluentUIIcons.Share" IconSize="IconSize.Large" />
             </Div>
         </Div>
     </Div>
