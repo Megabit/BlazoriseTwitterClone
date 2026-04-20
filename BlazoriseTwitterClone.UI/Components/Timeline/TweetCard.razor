@@ -63,13 +63,13 @@
         }
 
         <Div Flex="Flex.JustifyContent.Between" TextColor="TextColor.Secondary" Margin="Margin.Is3.FromTop" Padding="Padding.Is1.FromEnd">
-            <TweetMetric IconName="@FluentUIIcons.Comment" Value="@Tweet.Replies.ToString()" />
-            <TweetMetric IconName="@FluentUIIcons.ArrowRepeatAll" Value="@Tweet.Reposts.ToString()" />
-            <TweetMetric IconName="@FluentUIIcons.Heart" Value="@Tweet.Likes.ToString()" />
-            <TweetMetric IconName="@FluentUIIcons.ChartMultiple" Value="@Tweet.Views" />
+            <TweetMetric IconName="@FluentUIIcons.Comment" Value="@Tweet.Replies.ToString()" TooltipText="Reply" />
+            <TweetMetric IconName="@FluentUIIcons.ArrowRepeatAll" Value="@Tweet.Reposts.ToString()" TooltipText="Repost" />
+            <TweetMetric IconName="@FluentUIIcons.Heart" Value="@Tweet.Likes.ToString()" TooltipText="Like" />
+            <TweetMetric IconName="@FluentUIIcons.ChartMultiple" Value="@Tweet.Views" TooltipText="Views" />
             <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3">
-                <Icon Name="@FluentUIIcons.Bookmark" IconSize="IconSize.Large" />
-                <Icon Name="@FluentUIIcons.Share" IconSize="IconSize.Large" />
+                <TweetIconAction IconName="@FluentUIIcons.Bookmark" IconSize="IconSize.Large" TooltipText="Bookmark" />
+                <TweetIconAction IconName="@FluentUIIcons.Share" IconSize="IconSize.Large" TooltipText="Share" />
             </Div>
         </Div>
     </Div>
