@@ -1,0 +1,70 @@
+@page "/post/{TweetId}"
+@inject TwitterDataService DataService
+@inject NavigationManager NavigationManager
+
+<Div Border="Border.Is1.OnBottom" Position="Position.Sticky.Top.Is0" Background="Background.White">
+    <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" Padding="Padding.Is2.OnX.Is1.OnY">
+        <Button Color="Color.Light" Clicked="@GoBack">
+            <Icon Name="@FluentUIIcons.ArrowLeft" />
+        </Button>
+        <Div TextWeight="TextWeight.Bold" TextSize="TextSize.Large">Post</Div>
+    </Div>
+</Div>
+
+@if ( tweet is null )
+{
+    <Div Height="Height.Px( 500 )" Flex="Flex.AlignItems.Center.JustifyContent.Center" TextColor="TextColor.Muted">
+        Post not found
+    </Div>
+}
+else
+{
+    <TweetCard Tweet="@tweet" NavigateOnClick="false" />
+
+    <Div Padding="Padding.Is3" Border="Border.Is1.OnBottom">
+        <Div TextColor="TextColor.Muted">
+            5:42 PM - Apr 19, 2026 - <Span TextColor="TextColor.Dark" TextWeight="TextWeight.Bold">@tweet.Views</Span> Views
+        </Div>
+    </Div>
+
+    <Div Border="Border.Is1.OnBottom" Padding="Padding.Is3">
+        <Div Flex="Flex.JustifyContent.Between" TextColor="TextColor.Secondary">
+            <TweetMetric IconName="@FluentUIIcons.Comment" Value="@tweet.Replies.ToString()" />
+            <TweetMetric IconName="@FluentUIIcons.ArrowRepeatAll" Value="@tweet.Reposts.ToString()" />
+            <TweetMetric IconName="@FluentUIIcons.Heart" Value="@tweet.Likes.ToString()" />
+            <TweetMetric IconName="@FluentUIIcons.Bookmark" Value="83" />
+            <Icon Name="@FluentUIIcons.Share" />
+        </Div>
+    </Div>
+
+    <Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.AlignItems.Center" Gap="Gap.Is3">
+        <Image Source="@DataService.CurrentUser.AvatarUrl" Width="Width.Rem( 2.5 )" Height="Height.Rem( 2.5 )" Border="Border.RoundedCircle" />
+        <Div TextColor="TextColor.Muted" TextSize="TextSize.Large" Width="Width.Is100">Post your reply</Div>
+        <Button Color="Color.Secondary" TextWeight="TextWeight.Bold">Reply</Button>
+    </Div>
+
+    <Div Padding="Padding.Is2.OnX" TextSize="TextSize.Small" TextColor="TextColor.Muted" Border="Border.Is1.OnBottom">
+        Relevant
+    </Div>
+
+    @foreach ( var reply in DataService.GetRepliesFor( tweet.Id ) )
+    {
+        <TweetCard Tweet="@reply" />
+    }
+}
+
+@code {
+    private Tweet? tweet;
+
+    [Parameter] public string TweetId { get; set; } = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        tweet = DataService.GetTweetById( TweetId );
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo( "/" );
+    }
+}

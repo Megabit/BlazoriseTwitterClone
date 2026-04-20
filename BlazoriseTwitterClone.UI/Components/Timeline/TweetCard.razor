@@ -1,44 +1,60 @@
 <Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.Default.NoWrap" Gap="Gap.Is2">
-    <Image Source="@Tweet.AvatarUrl" Width="Width.Rem( 2.5 )" Height="Height.Rem( 2.5 )" Border="Border.RoundedCircle" />
+    <Div Position="Position.Relative">
+        <Image Source="@Tweet.AvatarUrl" Width="Width.Rem( 2.5 )" Height="Height.Rem( 2.5 )" Border="Border.RoundedCircle" />
+        @if ( NavigateOnClick )
+        {
+            <Anchor To="@PostUrl" Title="@($"Open post by {Tweet.Author}")" Stretched></Anchor>
+        }
+    </Div>
+
     <Div Flex="Flex.Column" Width="Width.Is100">
         <Div Flex="Flex.AlignItems.Center.JustifyContent.Between">
-            <Div>
+            <Div Position="Position.Relative">
                 <Span TextWeight="TextWeight.Bold">@Tweet.Author</Span>
                 @if ( Tweet.Verified )
                 {
                     <Span TextColor="TextColor.Primary">*</Span>
                 }
                 <Span TextColor="TextColor.Muted"> @Tweet.Handle - @Tweet.Time</Span>
+                @if ( NavigateOnClick )
+                {
+                    <Anchor To="@PostUrl" Title="@($"Open post by {Tweet.Author}")" Stretched></Anchor>
+                }
             </Div>
             <Icon Name="@FluentUIIcons.MoreHorizontal" TextColor="TextColor.Muted" />
         </Div>
 
-        <Div Margin="Margin.Is1.FromTop">
+        <Div Position="Position.Relative" Margin="Margin.Is1.FromTop">
             @foreach ( var line in Tweet.Body.Split( '\n' ) )
             {
                 <Div>@line</Div>
             }
-        </Div>
 
-        @if ( !string.IsNullOrWhiteSpace( Tweet.QuotedBody ) )
-        {
-            <Card Border="Border.Is1" Margin="Margin.Is3.FromTop">
-                <CardBody Padding="Padding.Is3">
-                    <Div>
-                        <Span TextWeight="TextWeight.Bold">@Tweet.QuotedAuthor</Span>
-                        <Span TextColor="TextColor.Muted"> @Tweet.QuotedHandle</Span>
-                    </Div>
-                    <Div TextColor="TextColor.Dark">@Tweet.QuotedBody</Div>
-                </CardBody>
-            </Card>
-        }
+            @if ( !string.IsNullOrWhiteSpace( Tweet.QuotedBody ) )
+            {
+                <Card Border="Border.Is1" Margin="Margin.Is3.FromTop">
+                    <CardBody Padding="Padding.Is3">
+                        <Div>
+                            <Span TextWeight="TextWeight.Bold">@Tweet.QuotedAuthor</Span>
+                            <Span TextColor="TextColor.Muted"> @Tweet.QuotedHandle</Span>
+                        </Div>
+                        <Div TextColor="TextColor.Dark">@Tweet.QuotedBody</Div>
+                    </CardBody>
+                </Card>
+            }
+
+            @if ( NavigateOnClick )
+            {
+                <Anchor To="@PostUrl" Title="@($"Open post by {Tweet.Author}")" Stretched></Anchor>
+            }
+        </Div>
 
         @if ( Tweet.PollOptions is not null )
         {
             <Div Flex="Flex.Column" Gap="Gap.Is1" Margin="Margin.Is3.FromTop">
                 @foreach ( var option in Tweet.PollOptions )
                 {
-                    <Button Color="Color.Primary" Outline Width="Width.Is100" Size="Size.Small" TextWeight="TextWeight.Bold">
+                    <Button Color="Color.Primary" Outline Width="Width.Is100" Size="Size.Small" TextWeight="TextWeight.Bold" @onclick:stopPropagation>
                         @option.Label
                     </Button>
                 }
@@ -60,8 +76,13 @@
             </Div>
         </Div>
     </Div>
+
 </Div>
 
 @code {
     [Parameter, EditorRequired] public Tweet Tweet { get; set; } = default!;
+
+    [Parameter] public bool NavigateOnClick { get; set; } = true;
+
+    private string PostUrl => $"/post/{Uri.EscapeDataString( Tweet.Id )}";
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using BlazoriseTwitterClone.Models;
 
 namespace BlazoriseTwitterClone.Data;
@@ -187,4 +188,26 @@ public sealed class TwitterDataService
         new( "liked", "Mira Stone", "https://api.dicebear.com/9.x/initials/svg?seed=Mira%20Stone", "Apr 15", "Oh, you noticed...\n\nThe rule is pretty dumb to begin with. You can only post on Saturday and ..." ),
         new( "reply", "Eder Bond", "https://api.dicebear.com/9.x/initials/svg?seed=Ari%20Finch0", "Apr 15", "The platform team is trying to reinvent the wheel. Meanwhile, their UI framework needs more hands and more steady maintenance." )
     ];
+
+    public IReadOnlyList<Tweet> GetAllTweets()
+    {
+        return HomeTimeline
+            .Concat( ProfilePosts )
+            .GroupBy( tweet => tweet.Id )
+            .Select( group => group.First() )
+            .ToList();
+    }
+
+    public Tweet? GetTweetById( string id )
+    {
+        return GetAllTweets().FirstOrDefault( tweet => tweet.Id == id );
+    }
+
+    public IReadOnlyList<Tweet> GetRepliesFor( string id )
+    {
+        return GetAllTweets()
+            .Where( tweet => tweet.Id != id )
+            .Take( 4 )
+            .ToList();
+    }
 }
