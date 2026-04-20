@@ -1,6 +1,6 @@
 @inject TwitterDataService DataService
 
-<Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.Default.NoWrap" Gap="Gap.Is2">
+<Div Border="Border.Is1.Light.OnBottom" Padding="Padding.Is3" Flex="Flex.Default.NoWrap" Gap="Gap.Is2">
     <Avatar Source="@Tweet.AvatarUrl" Text="@Tweet.Author" Size="2.5" To="@ProfileUrl" Title="@($"Open profile for {Tweet.Author}")" />
 
     <Div Flex="Flex.Column" Width="Width.Is100">
@@ -31,7 +31,7 @@
 
         @if ( !string.IsNullOrWhiteSpace( Tweet.QuotedBody ) )
         {
-            <Card Border="Border.Is1" Margin="Margin.Is3.FromTop">
+            <Card Border="Border.Is1.Light" Margin="Margin.Is3.FromTop">
                 <CardBody Padding="Padding.Is3">
                     <Div Position="Position.Relative">
                         <Span TextWeight="TextWeight.Bold">@Tweet.QuotedAuthor</Span>

@@ -2,7 +2,7 @@
 @inject TwitterDataService DataService
 @inject NavigationManager NavigationManager
 
-<Div Border="Border.Is1.OnBottom" Position="Position.Sticky.Top.Is0" Background="Background.White">
+<Div Border="Border.Is1.Light.OnBottom" Position="Position.Sticky.Top.Is0" Background="Background.White">
     <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" Padding="Padding.Is2.OnX.Is1.OnY">
         <Button Color="Color.Light" Clicked="@GoBack">
             <Icon Name="@FluentUIIcons.ArrowLeft" />
@@ -21,13 +21,13 @@ else
 {
     <TweetCard Tweet="@tweet" NavigateOnClick="false" />
 
-    <Div Padding="Padding.Is3" Border="Border.Is1.OnBottom">
+    <Div Padding="Padding.Is3" Border="Border.Is1.Light.OnBottom">
         <Div TextColor="TextColor.Muted">
             5:42 PM - Apr 19, 2026 - <Span TextColor="TextColor.Dark" TextWeight="TextWeight.Bold">@tweet.Views</Span> Views
         </Div>
     </Div>
 
-    <Div Border="Border.Is1.OnBottom" Padding="Padding.Is3">
+    <Div Border="Border.Is1.Light.OnBottom" Padding="Padding.Is3">
         <Div Flex="Flex.JustifyContent.Between" TextColor="TextColor.Secondary">
             <TweetMetric IconName="@FluentUIIcons.Comment" Value="@tweet.Replies.ToString()" />
             <TweetMetric IconName="@FluentUIIcons.ArrowRepeatAll" Value="@tweet.Reposts.ToString()" />
@@ -37,19 +37,19 @@ else
         </Div>
     </Div>
 
-    <Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.AlignItems.Center" Gap="Gap.Is3">
+    <Div Border="Border.Is1.Light.OnBottom" Padding="Padding.Is3" Flex="Flex.AlignItems.Center" Gap="Gap.Is3">
         <Avatar Source="@DataService.CurrentUser.AvatarUrl" Text="@DataService.CurrentUser.DisplayName" Size="2.5" />
         <Div TextColor="TextColor.Muted" TextSize="TextSize.Large" Width="Width.Is100">Post your reply</Div>
         <Button Color="Color.Secondary" TextWeight="TextWeight.Bold">Reply</Button>
     </Div>
 
-    <Div Padding="Padding.Is2.OnX" TextSize="TextSize.Small" TextColor="TextColor.Muted" Border="Border.Is1.OnBottom">
+    <Div Padding="Padding.Is2.OnX" TextSize="TextSize.Small" TextColor="TextColor.Muted" Border="Border.Is1.Light.OnBottom">
         Relevant
     </Div>
 
     @foreach ( var comment in DataService.GetCommentsFor( tweet.Id ) )
     {
-        <Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.Default.NoWrap" Gap="Gap.Is2">
+        <Div Border="Border.Is1.Light.OnBottom" Padding="Padding.Is3" Flex="Flex.Default.NoWrap" Gap="Gap.Is2">
             <Avatar Source="@comment.AvatarUrl" Text="@comment.Author" Size="2.5" To="@DataService.GetProfileUrl( comment.Handle )" Title="@($"Open profile for {comment.Author}")" />
             <Div Flex="Flex.Column" Width="Width.Is100">
                 <Div Flex="Flex.AlignItems.Center.JustifyContent.Between">

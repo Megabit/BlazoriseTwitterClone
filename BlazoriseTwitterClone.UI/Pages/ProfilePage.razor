@@ -2,7 +2,7 @@
 @page "/profile/{Handle}"
 @inject TwitterDataService DataService
 
-<Div Border="Border.Is1.OnBottom">
+<Div Border="Border.Is1.Light.OnBottom">
     <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" Padding="Padding.Is2.OnX.Is1.OnY">
         <Anchor To="/" Unstyled TextColor="TextColor.Dark"><Icon Name="@FluentUIIcons.ArrowLeft" /></Anchor>
         <Div>
@@ -14,7 +14,7 @@
 
 <Div>
     <Image Source="@profile.BannerUrl" Width="Width.Is100" Height="Height.Px( 170 )" ObjectFit="ObjectFit.Cover" />
-    <Div Padding="Padding.Is3" Border="Border.Is1.OnBottom">
+    <Div Padding="Padding.Is3" Border="Border.Is1.Light.OnBottom">
         <Div Flex="Flex.JustifyContent.Between.AlignItems.Start">
             <Div Margin="Margin.Is5.FromTop">
                 <Avatar Source="@profile.AvatarUrl" Text="@profile.DisplayName" Size="6.5" />
@@ -44,7 +44,7 @@
     </Div>
 </Div>
 
-<Div Border="Border.Is1.OnBottom">
+<Div Border="Border.Is1.Light.OnBottom">
     <Div Flex="Flex.JustifyContent.Between" Padding="Padding.Is3.OnX.Is2.OnY" TextWeight="TextWeight.SemiBold">
         <Span>Posts</Span>
         <Span TextColor="TextColor.Muted">Replies</Span>

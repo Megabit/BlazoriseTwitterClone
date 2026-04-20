@@ -4,7 +4,7 @@
 <Div Flex="Flex.JustifyContent.Center" Background="Background.White" TextColor="TextColor.Dark">
     <Div Flex="Flex.Default.NoWrap.AlignItems.Start" Width="Width.Px( 1280 )">
         <SideNavigation />
-        <Div Width="Width.Px( 520 )" Flex="Flex.Column" Border="Border.Is1.OnStart.Is1.OnEnd">
+        <Div Width="Width.Px( 520 )" Flex="Flex.Column">
             @Body
         </Div>
         <RightRail Trends="@DataService.Trends" Suggestions="@DataService.Suggestions" />
