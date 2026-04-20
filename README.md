@@ -19,7 +19,7 @@ The goal is to showcase how far you can take Blazorise components and the [Tailw
 
 ## Example
 
-<img width="1584" height="761" alt="Home timeline" src="Screenshot_1.png" />
+<img width="1341" height="932" alt="image" src="https://github.com/user-attachments/assets/8717ee53-9a4c-4ea8-aa35-df02d2432d55" />
 
 ---
 
