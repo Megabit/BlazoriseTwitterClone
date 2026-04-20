@@ -3,7 +3,7 @@
         <Icon Name="@(Item.Type == "liked" ? FluentUIIcons.HeartFilled : FluentUIIcons.ArrowReply)" />
     </Div>
     <Div Flex="Flex.Column" Width="Width.Is100">
-        <Image Source="@Item.AvatarUrl" Width="Width.Rem( 2.25 )" Height="Height.Rem( 2.25 )" Border="Border.RoundedCircle" />
+        <Avatar Source="@Item.AvatarUrl" Text="@Item.Actor" Size="2.25" />
         <Div Margin="Margin.Is2.FromTop">
             <Span TextWeight="TextWeight.Bold">@Item.Actor</Span>
             @if ( Item.Verified )

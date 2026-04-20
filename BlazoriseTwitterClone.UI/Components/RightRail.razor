@@ -1,3 +1,5 @@
+@inject TwitterDataService DataService
+
 <Div Width="Width.Px( 360 )" Height="Height.Vh( 100 )" Position="Position.Sticky.Top.Is0" Overflow="Overflow.Auto" Padding="Padding.Is3.OnX.Is1.OnY" Flex="Flex.Column" Gap="Gap.Is3">
     <TextInput Placeholder="Search" Role="TextRole.Search" />
 
@@ -25,8 +27,8 @@
             @foreach ( var suggestion in Suggestions )
             {
                 <Div Flex="Flex.AlignItems.Center.JustifyContent.Between" Padding="Padding.Is2.OnY">
-                    <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is2">
-                        <Image Source="@suggestion.AvatarUrl" Width="Width.Rem( 2.25 )" Height="Height.Rem( 2.25 )" Border="Border.RoundedCircle" />
+                    <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is2" Position="Position.Relative">
+                        <Avatar Source="@suggestion.AvatarUrl" Text="@suggestion.Name" Size="2.25" />
                         <Div>
                             <Div TextWeight="TextWeight.Bold">
                                 @suggestion.Name
@@ -37,6 +39,7 @@
                             </Div>
                             <Div TextSize="TextSize.Small" TextColor="TextColor.Muted">@suggestion.Handle</Div>
                         </Div>
+                        <Anchor To="@DataService.GetProfileUrl( suggestion.Handle )" Title="@($"Open profile for {suggestion.Name}")" Stretched></Anchor>
                     </Div>
                     <Button Color="Color.Dark" Size="Size.Small" TextWeight="TextWeight.Bold">Follow</Button>
                 </Div>

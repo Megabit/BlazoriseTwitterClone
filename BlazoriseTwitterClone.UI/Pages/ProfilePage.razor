@@ -1,35 +1,45 @@
 @page "/profile"
+@page "/profile/{Handle}"
 @inject TwitterDataService DataService
 
 <Div Border="Border.Is1.OnBottom">
     <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" Padding="Padding.Is2.OnX.Is1.OnY">
         <Anchor To="/" Unstyled TextColor="TextColor.Dark"><Icon Name="@FluentUIIcons.ArrowLeft" /></Anchor>
         <Div>
-            <Div TextWeight="TextWeight.Bold" TextSize="TextSize.Large">@DataService.CurrentUser.DisplayName</Div>
-            <Div TextColor="TextColor.Muted" TextSize="TextSize.Small">@DataService.CurrentUser.Posts.ToString( "N0" ) posts</Div>
+            <Div TextWeight="TextWeight.Bold" TextSize="TextSize.Large">@profile.DisplayName</Div>
+            <Div TextColor="TextColor.Muted" TextSize="TextSize.Small">@profile.Posts.ToString( "N0" ) posts</Div>
         </Div>
     </Div>
 </Div>
 
 <Div>
-    <Image Source="@DataService.CurrentUser.BannerUrl" Width="Width.Is100" Height="Height.Px( 170 )" />
+    <Image Source="@profile.BannerUrl" Width="Width.Is100" Height="Height.Px( 170 )" ObjectFit="ObjectFit.Cover" />
     <Div Padding="Padding.Is3" Border="Border.Is1.OnBottom">
         <Div Flex="Flex.JustifyContent.Between.AlignItems.Start">
-            <Image Source="@DataService.CurrentUser.AvatarUrl" Width="Width.Rem( 6.5 )" Height="Height.Rem( 6.5 )" Border="Border.RoundedCircle" Margin="Margin.Is5.FromTop" />
-            <Button Color="Color.Light" TextWeight="TextWeight.Bold">Edit profile</Button>
+            <Div Margin="Margin.Is5.FromTop">
+                <Avatar Source="@profile.AvatarUrl" Text="@profile.DisplayName" Size="6.5" />
+            </Div>
+            @if ( isCurrentUser )
+            {
+                <Button Color="Color.Light" TextWeight="TextWeight.Bold">Edit profile</Button>
+            }
+            else
+            {
+                <Button Color="Color.Dark" TextWeight="TextWeight.Bold">Follow</Button>
+            }
         </Div>
-        <Div TextSize="TextSize.Heading5" TextWeight="TextWeight.Bold">@DataService.CurrentUser.DisplayName</Div>
-        <Div TextColor="TextColor.Muted">@DataService.CurrentUser.Handle</Div>
-        <Div Margin="Margin.Is3.FromTop">@DataService.CurrentUser.Bio</Div>
+        <Div TextSize="TextSize.Heading5" TextWeight="TextWeight.Bold">@profile.DisplayName</Div>
+        <Div TextColor="TextColor.Muted">@profile.Handle</Div>
+        <Div Margin="Margin.Is3.FromTop">@profile.Bio</Div>
         <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" TextColor="TextColor.Muted" Margin="Margin.Is2.FromTop">
-            <Span><Icon Name="@FluentUIIcons.Location" /> @DataService.CurrentUser.Location</Span>
-            <Span><Icon Name="@FluentUIIcons.Link" /> @DataService.CurrentUser.Website</Span>
-            <Span>@DataService.CurrentUser.Birthday</Span>
+            <Span><Icon Name="@FluentUIIcons.Location" /> @profile.Location</Span>
+            <Span><Icon Name="@FluentUIIcons.Link" /> @profile.Website</Span>
+            <Span>@profile.Birthday</Span>
         </Div>
-        <Div TextColor="TextColor.Muted" Margin="Margin.Is1.FromTop">@DataService.CurrentUser.Joined</Div>
+        <Div TextColor="TextColor.Muted" Margin="Margin.Is1.FromTop">@profile.Joined</Div>
         <Div Flex="Flex.AlignItems.Center" Gap="Gap.Is3" Margin="Margin.Is3.FromTop">
-            <Span><Span TextWeight="TextWeight.Bold">@DataService.CurrentUser.Following</Span> <Span TextColor="TextColor.Muted">Following</Span></Span>
-            <Span><Span TextWeight="TextWeight.Bold">@DataService.CurrentUser.Followers</Span> <Span TextColor="TextColor.Muted">Followers</Span></Span>
+            <Span><Span TextWeight="TextWeight.Bold">@profile.Following</Span> <Span TextColor="TextColor.Muted">Following</Span></Span>
+            <Span><Span TextWeight="TextWeight.Bold">@profile.Followers</Span> <Span TextColor="TextColor.Muted">Followers</Span></Span>
         </Div>
     </Div>
 </Div>
@@ -45,7 +55,22 @@
     </Div>
 </Div>
 
-@foreach ( var tweet in DataService.ProfilePosts )
+@foreach ( var tweet in profilePosts )
 {
     <TweetCard Tweet="@tweet" />
+}
+
+@code {
+    private UserProfile profile = default!;
+    private IReadOnlyList<Tweet> profilePosts = [];
+    private bool isCurrentUser;
+
+    [Parameter] public string? Handle { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        profile = DataService.GetProfileByHandle( Handle );
+        profilePosts = DataService.GetProfilePosts( Handle );
+        isCurrentUser = DataService.IsCurrentUser( profile );
+    }
 }

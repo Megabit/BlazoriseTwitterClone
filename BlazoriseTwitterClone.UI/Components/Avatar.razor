@@ -1,0 +1,29 @@
+<Div Width="Width.Rem( Size )"
+     Height="Height.Rem( Size )"
+     Border="Border.RoundedCircle"
+     Overflow="Overflow.Hidden"
+     Position="Position.Relative"
+     Flex="Flex.AlignItems.Center.JustifyContent.Center.Shrink.Is0">
+    <Image Source="@Source"
+           Text="@Text"
+           Width="Width.Rem( Size )"
+           Height="Height.Rem( Size )"
+           ObjectFit="ObjectFit.Cover" />
+
+    @if ( !string.IsNullOrWhiteSpace( To ) )
+    {
+        <Anchor To="@To" Title="@Title" Stretched></Anchor>
+    }
+</Div>
+
+@code {
+    [Parameter, EditorRequired] public string Source { get; set; } = string.Empty;
+
+    [Parameter] public string Text { get; set; } = "Avatar";
+
+    [Parameter] public double Size { get; set; } = 2.5;
+
+    [Parameter] public string? To { get; set; }
+
+    [Parameter] public string? Title { get; set; }
+}

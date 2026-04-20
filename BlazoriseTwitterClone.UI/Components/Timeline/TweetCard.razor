@@ -1,11 +1,7 @@
+@inject TwitterDataService DataService
+
 <Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.Default.NoWrap" Gap="Gap.Is2">
-    <Div Position="Position.Relative">
-        <Image Source="@Tweet.AvatarUrl" Width="Width.Rem( 2.5 )" Height="Height.Rem( 2.5 )" Border="Border.RoundedCircle" />
-        @if ( NavigateOnClick )
-        {
-            <Anchor To="@PostUrl" Title="@($"Open post by {Tweet.Author}")" Stretched></Anchor>
-        }
-    </Div>
+    <Avatar Source="@Tweet.AvatarUrl" Text="@Tweet.Author" Size="2.5" To="@ProfileUrl" Title="@($"Open profile for {Tweet.Author}")" />
 
     <Div Flex="Flex.Column" Width="Width.Is100">
         <Div Flex="Flex.AlignItems.Center.JustifyContent.Between">
@@ -16,10 +12,7 @@
                     <Span TextColor="TextColor.Primary">*</Span>
                 }
                 <Span TextColor="TextColor.Muted"> @Tweet.Handle - @Tweet.Time</Span>
-                @if ( NavigateOnClick )
-                {
-                    <Anchor To="@PostUrl" Title="@($"Open post by {Tweet.Author}")" Stretched></Anchor>
-                }
+                <Anchor To="@ProfileUrl" Title="@($"Open profile for {Tweet.Author}")" Stretched></Anchor>
             </Div>
             <Icon Name="@FluentUIIcons.MoreHorizontal" TextColor="TextColor.Muted" IconSize="IconSize.Large" />
         </Div>
@@ -30,24 +23,28 @@
                 <Div>@line</Div>
             }
 
-            @if ( !string.IsNullOrWhiteSpace( Tweet.QuotedBody ) )
-            {
-                <Card Border="Border.Is1" Margin="Margin.Is3.FromTop">
-                    <CardBody Padding="Padding.Is3">
-                        <Div>
-                            <Span TextWeight="TextWeight.Bold">@Tweet.QuotedAuthor</Span>
-                            <Span TextColor="TextColor.Muted"> @Tweet.QuotedHandle</Span>
-                        </Div>
-                        <Div TextColor="TextColor.Dark">@Tweet.QuotedBody</Div>
-                    </CardBody>
-                </Card>
-            }
-
             @if ( NavigateOnClick )
             {
                 <Anchor To="@PostUrl" Title="@($"Open post by {Tweet.Author}")" Stretched></Anchor>
             }
         </Div>
+
+        @if ( !string.IsNullOrWhiteSpace( Tweet.QuotedBody ) )
+        {
+            <Card Border="Border.Is1" Margin="Margin.Is3.FromTop">
+                <CardBody Padding="Padding.Is3">
+                    <Div Position="Position.Relative">
+                        <Span TextWeight="TextWeight.Bold">@Tweet.QuotedAuthor</Span>
+                        <Span TextColor="TextColor.Muted"> @Tweet.QuotedHandle</Span>
+                        @if ( !string.IsNullOrWhiteSpace( Tweet.QuotedHandle ) )
+                        {
+                            <Anchor To="@DataService.GetProfileUrl( Tweet.QuotedHandle )" Title="@($"Open profile for {Tweet.QuotedAuthor}")" Stretched></Anchor>
+                        }
+                    </Div>
+                    <Div TextColor="TextColor.Dark">@Tweet.QuotedBody</Div>
+                </CardBody>
+            </Card>
+        }
 
         @if ( Tweet.PollOptions is not null )
         {
@@ -85,4 +82,6 @@
     [Parameter] public bool NavigateOnClick { get; set; } = true;
 
     private string PostUrl => $"/post/{Uri.EscapeDataString( Tweet.Id )}";
+
+    private string ProfileUrl => DataService.GetProfileUrl( Tweet.Handle );
 }

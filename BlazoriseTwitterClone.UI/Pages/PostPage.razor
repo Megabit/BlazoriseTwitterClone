@@ -38,7 +38,7 @@ else
     </Div>
 
     <Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.AlignItems.Center" Gap="Gap.Is3">
-        <Image Source="@DataService.CurrentUser.AvatarUrl" Width="Width.Rem( 2.5 )" Height="Height.Rem( 2.5 )" Border="Border.RoundedCircle" />
+        <Avatar Source="@DataService.CurrentUser.AvatarUrl" Text="@DataService.CurrentUser.DisplayName" Size="2.5" />
         <Div TextColor="TextColor.Muted" TextSize="TextSize.Large" Width="Width.Is100">Post your reply</Div>
         <Button Color="Color.Secondary" TextWeight="TextWeight.Bold">Reply</Button>
     </Div>
@@ -50,16 +50,17 @@ else
     @foreach ( var comment in DataService.GetCommentsFor( tweet.Id ) )
     {
         <Div Border="Border.Is1.OnBottom" Padding="Padding.Is3" Flex="Flex.Default.NoWrap" Gap="Gap.Is2">
-            <Image Source="@comment.AvatarUrl" Width="Width.Rem( 2.5 )" Height="Height.Rem( 2.5 )" Border="Border.RoundedCircle" />
+            <Avatar Source="@comment.AvatarUrl" Text="@comment.Author" Size="2.5" To="@DataService.GetProfileUrl( comment.Handle )" Title="@($"Open profile for {comment.Author}")" />
             <Div Flex="Flex.Column" Width="Width.Is100">
                 <Div Flex="Flex.AlignItems.Center.JustifyContent.Between">
-                    <Div>
+                    <Div Position="Position.Relative">
                         <Span TextWeight="TextWeight.Bold">@comment.Author</Span>
                         @if ( comment.Verified )
                         {
                             <Span TextColor="TextColor.Primary">*</Span>
                         }
                         <Span TextColor="TextColor.Muted"> @comment.Handle - @comment.Time</Span>
+                        <Anchor To="@DataService.GetProfileUrl( comment.Handle )" Title="@($"Open profile for {comment.Author}")" Stretched></Anchor>
                     </Div>
                     <Icon Name="@FluentUIIcons.MoreHorizontal" TextColor="TextColor.Muted" />
                 </Div>

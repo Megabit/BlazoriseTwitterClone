@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BlazoriseTwitterClone.Models;
@@ -17,8 +18,8 @@ public sealed class TwitterDataService
         177,
         571,
         2082,
-        "https://api.dicebear.com/9.x/initials/svg?seed=Milo%20Arden",
-        "https://images.unsplash.com/photo-1557682250-33bd709cbe85?auto=format&fit=crop&w=1200&q=80" );
+        Avatar( 1 ),
+        OfficeImage( 1 ) );
 
     public IReadOnlyList<Tweet> HomeTimeline { get; } =
     [
@@ -27,7 +28,7 @@ public sealed class TwitterDataService
             "Dev Ledger",
             "@devledger",
             "13h",
-            "https://api.dicebear.com/9.x/initials/svg?seed=Dev%20Ledger",
+            Avatar( 2 ),
             "Planning on picking up a new programming language?\n\nBased on my development needs, I'm primarily anchored in one language. I know enough about other languages to navigate and get by, but certainly not an expert.\n\nWhat language are you learning next? Comment if not included!",
             null,
             null,
@@ -49,7 +50,7 @@ public sealed class TwitterDataService
             "Nova Reed",
             "@novareed",
             "4h",
-            "https://api.dicebear.com/9.x/initials/svg?seed=Nova%20Reed",
+            Avatar( 3 ),
             "I feel disappointed to find out that the creator of such a good software has such harsh public opinions. It always seems like the programming industry is caught between brilliant tools and very loud arguments.",
             "Rowan Vale",
             "@rowanvale",
@@ -63,7 +64,7 @@ public sealed class TwitterDataService
             "Rowan Vale",
             "@rowanvale",
             "2h",
-            "https://api.dicebear.com/9.x/initials/svg?seed=Rowan%20Vale",
+            Avatar( 4 ),
             "What's harsh in my post?",
             null,
             null,
@@ -78,7 +79,7 @@ public sealed class TwitterDataService
             "Finn Brooks",
             "@finnbuilds",
             "19h",
-            "https://api.dicebear.com/9.x/initials/svg?seed=Finn%20Brooks",
+            Avatar( 5 ),
             "Amazing how many seemingly simple tools are mini distributed systems running on a single machine.",
             null,
             null,
@@ -93,7 +94,7 @@ public sealed class TwitterDataService
             "Kai Mercer",
             "@kaimercer",
             "Apr 18",
-            "https://api.dicebear.com/9.x/initials/svg?seed=Kai%20Mercer",
+            Avatar( 6 ),
             "software is only getting worse, more bugs, bad uptime\n\nwhich is weird because ai is really good at coding at this point\n\nthe productivity gains are erased by the speed of creation; we move faster but not better",
             null,
             null,
@@ -108,7 +109,7 @@ public sealed class TwitterDataService
             "Galen Pike",
             "@galenpike",
             "Apr 17",
-            "https://api.dicebear.com/9.x/initials/svg?seed=Galen%20Pike",
+            Avatar( 7 ),
             "I still use ChatGPT.\n\nCouldn't find a better model for brainstorming yet.",
             null,
             null,
@@ -127,7 +128,7 @@ public sealed class TwitterDataService
             "Milo Arden",
             "@miloarden",
             "Apr 16",
-            "https://api.dicebear.com/9.x/initials/svg?seed=Milo%20Arden",
+            Avatar( 1 ),
             "What is your opinion on line endings in C# and Razor files? Especially for generated files. Personally I hate the inconsistency, but I want to know what other people think...",
             null,
             null,
@@ -141,7 +142,7 @@ public sealed class TwitterDataService
             "Milo Arden",
             "@miloarden",
             "Apr 15",
-            "https://api.dicebear.com/9.x/initials/svg?seed=Milo%20Arden",
+            Avatar( 1 ),
             "Blazorise 2.1 is now available.\n\nOne of the largest releases so far, introducing Material 3, AntDesign provider, DataGrid hierarchical data support, and a new Maps extension.\n\nMany components are improved, including accessibility and responsive behavior.",
             null,
             null,
@@ -162,37 +163,43 @@ public sealed class TwitterDataService
 
     public IReadOnlyList<FollowSuggestion> Suggestions { get; } =
     [
-        new( "Astra UI", "@astraui", "https://api.dicebear.com/9.x/initials/svg?seed=Astra%20UI", true ),
-        new( "North Studio", "@northstudio", "https://api.dicebear.com/9.x/initials/svg?seed=North%20Studio", true ),
-        new( "Dane Clarke", "@daneclarke", "https://api.dicebear.com/9.x/initials/svg?seed=North%20Studio9", false )
+        new( "Astra UI", "@astraui", Avatar( 2 ), true ),
+        new( "North Studio", "@northstudio", Avatar( 5 ), true ),
+        new( "Dane Clarke", "@daneclarke", Avatar( 7 ), false )
     ];
 
     public IReadOnlyList<Conversation> Conversations { get; } =
     [
-        new( "Sam T. River #dotnet", "@samriver", "https://api.dicebear.com/9.x/initials/svg?seed=Sam%20River", "Thanks, much appreciated. Looking ...", "33w", true ),
-        new( "Ari Finch", "@arifinch", "https://api.dicebear.com/9.x/initials/svg?seed=Ari%20Finch", "The package stats are the only metric I ...", "78w", true ),
-        new( "Cody Vale", "@codyvale", "https://api.dicebear.com/9.x/initials/svg?seed=Cody%20Vale", "Well, it's a little more complicated than ...", "82w", true ),
-        new( "Mira Stone", "@mirastone", "https://api.dicebear.com/9.x/initials/svg?seed=Mira%20Stone", "You: Sorry for sending the message this late...", "108w", true ),
-        new( "Toma North", "@tomanorth", "https://api.dicebear.com/9.x/initials/svg?seed=Sam%20River0", "You: So many times I got burned by ...", "139w" ),
-        new( "Evan Hale", "@evanhale", "https://api.dicebear.com/9.x/initials/svg?seed=Sam%20River6", "You: I need to look that up", "140w" ),
-        new( "Ravi Moss", "@ravimoss", "https://api.dicebear.com/9.x/initials/svg?seed=Sam%20River7", "Thanks for clarifying. Let me ask ...", "150w" ),
-        new( "Luca West", "@lucawest", "https://api.dicebear.com/9.x/initials/svg?seed=Sam%20River9", "Hey Milo!...", "157w" ),
-        new( "Chris Rowan", "@chrisrowan", "https://api.dicebear.com/9.x/initials/svg?seed=Chris%20Rowan", "You: Thank you!", "174w" )
+        new( "Sam T. River #dotnet", "@samriver", Avatar( 3 ), "Thanks, much appreciated. Looking ...", "33w", true ),
+        new( "Ari Finch", "@arifinch", Avatar( 4 ), "The package stats are the only metric I ...", "78w", true ),
+        new( "Cody Vale", "@codyvale", Avatar( 5 ), "Well, it's a little more complicated than ...", "82w", true ),
+        new( "Mira Stone", "@mirastone", Avatar( 6 ), "You: Sorry for sending the message this late...", "108w", true ),
+        new( "Toma North", "@tomanorth", Avatar( 7 ), "You: So many times I got burned by ...", "139w" ),
+        new( "Evan Hale", "@evanhale", Avatar( 1 ), "You: I need to look that up", "140w" ),
+        new( "Ravi Moss", "@ravimoss", Avatar( 2 ), "Thanks for clarifying. Let me ask ...", "150w" ),
+        new( "Luca West", "@lucawest", Avatar( 3 ), "Hey Milo!...", "157w" ),
+        new( "Chris Rowan", "@chrisrowan", Avatar( 4 ), "You: Thank you!", "174w" )
     ];
 
     public IReadOnlyList<NotificationItem> Notifications { get; } =
     [
-        new( "liked", "Nika Snow", "https://api.dicebear.com/9.x/initials/svg?seed=Nika%20Snow", "Apr 16", "Blazorise 2.1 is coming tomorrow, but we're already working on the future versions." ),
-        new( "reply", "Juno Square", "https://api.dicebear.com/9.x/initials/svg?seed=Juno%20Square", "Apr 16", "It's an utterly ridiculous rule that demonstrates how lost the moderators are.", true ),
-        new( "liked", "Sander Blue and 4 others", "https://api.dicebear.com/9.x/initials/svg?seed=Sander%20Blue", "Apr 15", "I don't see why there are problems with the csproj file. It's so simple.\n\nIn JS worlds, we have package.json, and somehow that is not a problem,..." ),
-        new( "liked", "Mira Stone", "https://api.dicebear.com/9.x/initials/svg?seed=Mira%20Stone", "Apr 15", "Oh, you noticed...\n\nThe rule is pretty dumb to begin with. You can only post on Saturday and ..." ),
-        new( "reply", "Eder Bond", "https://api.dicebear.com/9.x/initials/svg?seed=Ari%20Finch0", "Apr 15", "The platform team is trying to reinvent the wheel. Meanwhile, their UI framework needs more hands and more steady maintenance." )
+        new( "liked", "Nika Snow", Avatar( 5 ), "Apr 16", "Blazorise 2.1 is coming tomorrow, but we're already working on the future versions." ),
+        new( "reply", "Juno Square", Avatar( 6 ), "Apr 16", "It's an utterly ridiculous rule that demonstrates how lost the moderators are.", true ),
+        new( "liked", "Sander Blue and 4 others", Avatar( 7 ), "Apr 15", "I don't see why there are problems with the csproj file. It's so simple.\n\nIn JS worlds, we have package.json, and somehow that is not a problem,..." ),
+        new( "liked", "Mira Stone", Avatar( 6 ), "Apr 15", "Oh, you noticed...\n\nThe rule is pretty dumb to begin with. You can only post on Saturday and ..." ),
+        new( "reply", "Eder Bond", Avatar( 4 ), "Apr 15", "The platform team is trying to reinvent the wheel. Meanwhile, their UI framework needs more hands and more steady maintenance." )
     ];
 
     public IReadOnlyList<Tweet> GetAllTweets()
     {
-        return HomeTimeline
+        var timelineTweets = HomeTimeline
             .Concat( ProfilePosts )
+            .GroupBy( tweet => tweet.Id )
+            .Select( group => group.First() )
+            .ToList();
+
+        return timelineTweets
+            .Concat( GetGeneratedProfileTweetsForKnownUsers( timelineTweets ) )
             .GroupBy( tweet => tweet.Id )
             .Select( group => group.First() )
             .ToList();
@@ -215,7 +222,7 @@ public sealed class TwitterDataService
                 "Ivy Lane",
                 "@ivylane",
                 "18m",
-                "https://api.dicebear.com/9.x/initials/svg?seed=Ivy%20Lane",
+                Avatar( 2 ),
                 $"Replying to {replyTarget}\nThis is the kind of thread that makes the tradeoffs visible. The tool can be useful and the social noise around it can still be exhausting.",
                 1,
                 2,
@@ -227,7 +234,7 @@ public sealed class TwitterDataService
                 "Nico Vale",
                 "@nicovale",
                 "32m",
-                "https://api.dicebear.com/9.x/initials/svg?seed=Nico%20Vale",
+                Avatar( 3 ),
                 $"Replying to {replyTarget}\nI keep coming back to incentives. The best tools get adopted quickly, but the conversations around them often move faster than the facts.",
                 0,
                 1,
@@ -238,7 +245,7 @@ public sealed class TwitterDataService
                 "Sage Porter",
                 "@sageporter",
                 "1h",
-                "https://api.dicebear.com/9.x/initials/svg?seed=Sage%20Porter",
+                Avatar( 4 ),
                 $"Replying to {replyTarget}\nThe practical answer is usually boring: use the useful parts, ignore the noise, and document the boundaries for the team.",
                 2,
                 4,
@@ -250,12 +257,217 @@ public sealed class TwitterDataService
                 "Remy Hart",
                 "@remyhart",
                 "2h",
-                "https://api.dicebear.com/9.x/initials/svg?seed=Remy%20Hart",
+                Avatar( 5 ),
                 $"Replying to {replyTarget}\nA lot of this feels like separating product quality from personality. That is simple to say and harder to do in public.",
                 0,
                 0,
                 6,
                 "104" )
         ];
+    }
+
+    public UserProfile GetProfileByHandle( string? handle )
+    {
+        var normalizedHandle = NormalizeHandle( handle );
+
+        if ( normalizedHandle == NormalizeHandle( CurrentUser.Handle ) )
+        {
+            return CurrentUser;
+        }
+
+        var tweet = HomeTimeline
+            .Concat( ProfilePosts )
+            .FirstOrDefault( item => NormalizeHandle( item.Handle ) == normalizedHandle );
+
+        if ( tweet is not null )
+        {
+            return CreateProfile( tweet.Author, tweet.Handle, tweet.AvatarUrl, tweet.Verified );
+        }
+
+        var suggestion = Suggestions.FirstOrDefault( item => NormalizeHandle( item.Handle ) == normalizedHandle );
+
+        if ( suggestion is not null )
+        {
+            return CreateProfile( suggestion.Name, suggestion.Handle, suggestion.AvatarUrl, suggestion.Verified );
+        }
+
+        var commentAuthor = GetCommentAuthors().FirstOrDefault( item => NormalizeHandle( item.Handle ) == normalizedHandle );
+
+        if ( commentAuthor is not null )
+        {
+            return CreateProfile( commentAuthor.Author, commentAuthor.Handle, commentAuthor.AvatarUrl, commentAuthor.Verified );
+        }
+
+        var generatedHandle = string.IsNullOrWhiteSpace( normalizedHandle ) ? "@guest" : $"@{normalizedHandle}";
+
+        return CreateProfile( ToDisplayName( generatedHandle ), generatedHandle, AvatarFor( generatedHandle ), false );
+    }
+
+    public IReadOnlyList<Tweet> GetProfilePosts( string? handle )
+    {
+        var profile = GetProfileByHandle( handle );
+        var normalizedHandle = NormalizeHandle( profile.Handle );
+
+        if ( normalizedHandle == NormalizeHandle( CurrentUser.Handle ) )
+        {
+            return ProfilePosts;
+        }
+
+        var existingTweets = HomeTimeline
+            .Concat( ProfilePosts )
+            .Where( tweet => NormalizeHandle( tweet.Handle ) == normalizedHandle )
+            .ToList();
+
+        if ( existingTweets.Count > 0 )
+        {
+            return existingTweets;
+        }
+
+        return CreateGeneratedProfileTweets( profile );
+    }
+
+    public string GetProfileUrl( string handle )
+    {
+        return $"/profile/{NormalizeHandle( handle )}";
+    }
+
+    public bool IsCurrentUser( UserProfile profile )
+    {
+        return NormalizeHandle( profile.Handle ) == NormalizeHandle( CurrentUser.Handle );
+    }
+
+    private IReadOnlyList<Tweet> GetGeneratedProfileTweetsForKnownUsers( IReadOnlyList<Tweet> existingTweets )
+    {
+        var existingHandles = existingTweets
+            .Select( tweet => NormalizeHandle( tweet.Handle ) )
+            .ToHashSet();
+
+        var commentProfiles = GetCommentAuthors()
+            .Select( author => CreateProfile( author.Author, author.Handle, author.AvatarUrl, author.Verified ) );
+
+        var suggestionProfiles = Suggestions
+            .Select( suggestion => CreateProfile( suggestion.Name, suggestion.Handle, suggestion.AvatarUrl, suggestion.Verified ) );
+
+        return commentProfiles
+            .Concat( suggestionProfiles )
+            .Where( profile => !existingHandles.Contains( NormalizeHandle( profile.Handle ) ) )
+            .GroupBy( profile => NormalizeHandle( profile.Handle ) )
+            .Select( group => group.First() )
+            .SelectMany( CreateGeneratedProfileTweets )
+            .ToList();
+    }
+
+    private static IReadOnlyList<PostComment> GetCommentAuthors()
+    {
+        return
+        [
+            new( "comment-author-1", "Ivy Lane", "@ivylane", "", Avatar( 2 ), "", 0, 0, 0, "", true ),
+            new( "comment-author-2", "Nico Vale", "@nicovale", "", Avatar( 3 ), "", 0, 0, 0, "" ),
+            new( "comment-author-3", "Sage Porter", "@sageporter", "", Avatar( 4 ), "", 0, 0, 0, "", true ),
+            new( "comment-author-4", "Remy Hart", "@remyhart", "", Avatar( 5 ), "", 0, 0, 0, "" )
+        ];
+    }
+
+    private static IReadOnlyList<Tweet> CreateGeneratedProfileTweets( UserProfile profile )
+    {
+        var slug = NormalizeHandle( profile.Handle );
+
+        return
+        [
+            new(
+                $"profile-{slug}-1",
+                profile.DisplayName,
+                profile.Handle,
+                "Apr 18",
+                profile.AvatarUrl,
+                "I keep a small list of things that made the work easier this week. Most of them are boring, but boring is usually what survives.",
+                null,
+                null,
+                null,
+                4,
+                3,
+                28,
+                "734",
+                true ),
+            new(
+                $"profile-{slug}-2",
+                profile.DisplayName,
+                profile.Handle,
+                "Apr 14",
+                profile.AvatarUrl,
+                "A clean interface is mostly restraint: fewer surprises, sharper defaults, and enough space for people to understand what just happened.",
+                null,
+                null,
+                null,
+                2,
+                5,
+                41,
+                "1.2K" )
+        ];
+    }
+
+    private static UserProfile CreateProfile( string displayName, string handle, string avatarUrl, bool verified )
+    {
+        var slug = NormalizeHandle( handle );
+        var seed = slug.Length == 0 ? "profile" : slug;
+        var followers = 240 + ( seed.Length * 37 );
+        var following = 80 + ( seed.Length * 11 );
+        var posts = 120 + ( seed.Length * 19 );
+
+        return new(
+            displayName,
+            handle,
+            verified ? "Designing small systems that stay understandable." : "Writing notes about software, tools, and the little decisions between them.",
+            "Somewhere online",
+            $"{seed}.example",
+            "Joined March 2021",
+            "Born July 8",
+            following,
+            followers,
+            posts,
+            avatarUrl,
+            OfficeImageFor( seed ) );
+    }
+
+    private static string NormalizeHandle( string? handle )
+    {
+        return ( handle ?? string.Empty ).Trim().TrimStart( '@' ).ToLowerInvariant();
+    }
+
+    private static string ToDisplayName( string handle )
+    {
+        var normalized = NormalizeHandle( handle );
+
+        if ( string.IsNullOrWhiteSpace( normalized ) )
+        {
+            return "Guest Profile";
+        }
+
+        return string.Join( ' ', normalized.Split( ['.', '-', '_'], System.StringSplitOptions.RemoveEmptyEntries )
+            .Select( part => char.ToUpperInvariant( part[0] ) + part[1..] ) );
+    }
+
+    private static string AvatarFor( string handle )
+    {
+        var index = ( NormalizeHandle( handle ).Length % 7 ) + 1;
+
+        return Avatar( index );
+    }
+
+    private static string Avatar( int index )
+    {
+        return $"/_content/BlazoriseTwitterClone.UI/img/avatars/square/avatar{index:00}.jpg";
+    }
+
+    private static string OfficeImageFor( string seed )
+    {
+        var index = ( seed.Length % 7 ) + 1;
+
+        return OfficeImage( index );
+    }
+
+    private static string OfficeImage( int index )
+    {
+        return $"/_content/BlazoriseTwitterClone.UI/img/office/office{index:00}.jpg";
     }
 }
