@@ -1,24 +1,54 @@
 @using Microsoft.AspNetCore.Components.Routing
 
-<CascadingValue Value="@appState">
-    <Router AppAssembly="typeof( Pages.HomePage ).Assembly">
-        <Found Context="routeData">
-            <RouteView RouteData="routeData" DefaultLayout="typeof( Layout.MainLayout )" />
-            <FocusOnNavigate RouteData="routeData" Selector="h1" />
-        </Found>
-        <NotFound>
-            <LayoutView Layout="typeof( Layout.MainLayout )">
-                <Div Border="Border.Is1.OnEnd.Is1.OnStart" Width="Width.Px( 520 )" Height="Height.Px( 760 )" Flex="Flex.AlignItems.Center.JustifyContent.Center" TextColor="TextColor.Muted">
-                    Page not found
-                </Div>
-            </LayoutView>
-        </NotFound>
-    </Router>
-</CascadingValue>
+<ThemeProvider Theme="@theme" WriteVariables>
+    <CascadingValue Value="@appState">
+        <Router AppAssembly="typeof( Pages.HomePage ).Assembly">
+            <Found Context="routeData">
+                <RouteView RouteData="routeData" DefaultLayout="typeof( Layout.MainLayout )" />
+                <FocusOnNavigate RouteData="routeData" Selector="h1" />
+            </Found>
+            <NotFound>
+                <LayoutView Layout="typeof( Layout.MainLayout )">
+                    <Div Border="Border.Is1.OnEnd.Is1.OnStart" Width="Width.Px( 520 )" Height="Height.Px( 760 )" Flex="Flex.AlignItems.Center.JustifyContent.Center" TextColor="TextColor.Muted">
+                        Page not found
+                    </Div>
+                </LayoutView>
+            </NotFound>
+        </Router>
+    </CascadingValue>
 
-<ModalProvider />
+    <ModalProvider />
+</ThemeProvider>
 
 @code {
+    private readonly Theme theme = new()
+    {
+        ColorOptions = new()
+        {
+            Primary = "#1d9bf0",
+            Secondary = "#536471",
+            Light = "#eff3f4",
+            Dark = "#0f1419",
+        },
+        BackgroundOptions = new()
+        {
+            Body = "#ffffff",
+            Light = "#eff3f4",
+            Muted = "#f7f9f9",
+        },
+        TextColorOptions = new()
+        {
+            Body = "#0f1419",
+            Dark = "#0f1419",
+            Secondary = "#536471",
+            Muted = "#536471",
+        },
+        BorderOptions = new()
+        {
+            SubtleTintWeight = 94,
+        },
+    };
+
     private readonly ApplicationState appState = new()
     {
         CurrentPage = "home",
