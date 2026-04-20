@@ -1,7 +1,7 @@
 # Blazorise Twitter Clone
 
 **BlazoriseTwitterClone** is an open-source project that replicates the familiar **Twitter/X** interface using [Blazorise](https://blazorise.com).
-The goal is to showcase how far you can take Blazorise components and the Tailwind provider to build a polished social feed UI in Blazor.
+The goal is to showcase how far you can take Blazorise components and the [Tailwind provider](https://blazorise.com/docs/usage/tailwind) to build a polished social feed UI in Blazor.
 
 ---
 
