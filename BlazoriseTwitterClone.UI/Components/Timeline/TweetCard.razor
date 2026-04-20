@@ -6,9 +6,9 @@
                 <Span TextWeight="TextWeight.Bold">@Tweet.Author</Span>
                 @if ( Tweet.Verified )
                 {
-                    <Span TextColor="TextColor.Primary">●</Span>
+                    <Span TextColor="TextColor.Primary">*</Span>
                 }
-                <Span TextColor="TextColor.Muted"> @Tweet.Handle · @Tweet.Time</Span>
+                <Span TextColor="TextColor.Muted"> @Tweet.Handle - @Tweet.Time</Span>
             </Div>
             <Icon Name="@FluentUIIcons.MoreHorizontal" TextColor="TextColor.Muted" />
         </Div>
@@ -31,6 +31,22 @@
                     <Div TextColor="TextColor.Dark">@Tweet.QuotedBody</Div>
                 </CardBody>
             </Card>
+        }
+
+        @if ( Tweet.PollOptions is not null )
+        {
+            <Div Flex="Flex.Column" Gap="Gap.Is1" Margin="Margin.Is3.FromTop">
+                @foreach ( var option in Tweet.PollOptions )
+                {
+                    <Button Color="Color.Primary" Outline Width="Width.Is100" Size="Size.Small" TextWeight="TextWeight.Bold">
+                        @option.Label
+                    </Button>
+                }
+                @if ( !string.IsNullOrWhiteSpace( Tweet.PollFooter ) )
+                {
+                    <Div TextColor="TextColor.Muted" TextSize="TextSize.Small" Margin="Margin.Is2.FromTop">@Tweet.PollFooter</Div>
+                }
+            </Div>
         }
 
         <Div Flex="Flex.JustifyContent.Between" TextColor="TextColor.Secondary" Margin="Margin.Is3.FromTop" Padding="Padding.Is1.FromEnd">

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace BlazoriseTwitterClone.Models;
 
 public sealed record UserProfile(
@@ -28,7 +30,12 @@ public sealed record Tweet(
     int Reposts,
     int Likes,
     string Views,
-    bool Verified = false );
+    bool Verified = false,
+    IReadOnlyList<PollOption>? PollOptions = null,
+    string? PollFooter = null );
+
+public sealed record PollOption(
+    string Label );
 
 public sealed record Trend(
     string Category,

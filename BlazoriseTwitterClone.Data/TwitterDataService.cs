@@ -22,6 +22,28 @@ public sealed class TwitterDataService
     public IReadOnlyList<Tweet> HomeTimeline { get; } =
     [
         new(
+            "poll-1",
+            "Dev Ledger",
+            "@devledger",
+            "13h",
+            "https://api.dicebear.com/9.x/initials/svg?seed=Dev%20Ledger",
+            "Planning on picking up a new programming language?\n\nBased on my development needs, I'm primarily anchored in one language. I know enough about other languages to navigate and get by, but certainly not an expert.\n\nWhat language are you learning next? Comment if not included!",
+            null,
+            null,
+            null,
+            1,
+            0,
+            3,
+            "643",
+            true,
+            [
+                new( "C#" ),
+                new( "Rust" ),
+                new( "C++" ),
+                new( "Golang" )
+            ],
+            "15 votes - 6 days left" ),
+        new(
             "1",
             "Nova Reed",
             "@novareed",

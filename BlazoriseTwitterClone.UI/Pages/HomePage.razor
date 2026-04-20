@@ -1,14 +1,41 @@
 @page "/"
 @inject TwitterDataService DataService
 
-<Div Border="Border.Is1.OnBottom">
+<Div Border="Border.Is1.OnBottom" Position="Position.Sticky.Top.Is0" Background="Background.White">
     <Div Flex="Flex.AlignItems.Center.JustifyContent.Center" Padding="Padding.Is2.OnY">
         <Div Width="Width.Is50" TextWeight="TextWeight.SemiBold" TextColor="TextColor.Muted" Flex="Flex.JustifyContent.Center">For you</Div>
         <Div Width="Width.Is50" TextWeight="TextWeight.Bold" Flex="Flex.JustifyContent.Center">Following</Div>
     </Div>
 </Div>
 
-@foreach ( var tweet in DataService.HomeTimeline )
-{
-    <TweetCard Tweet="@tweet" />
+<Virtualize ItemsProvider="@LoadTweets" Context="tweet" ItemSize="260" OverscanCount="4">
+    <ItemContent>
+        <TweetCard Tweet="@tweet" />
+    </ItemContent>
+    <Placeholder>
+        <Div Padding="Padding.Is3" TextColor="TextColor.Muted">Loading posts...</Div>
+    </Placeholder>
+</Virtualize>
+
+@code {
+    private const int VirtualFeedSize = 10000;
+
+    private ValueTask<ItemsProviderResult<Tweet>> LoadTweets( ItemsProviderRequest request )
+    {
+        var source = DataService.HomeTimeline;
+        var remaining = VirtualFeedSize - request.StartIndex;
+        var count = Math.Min( request.Count, remaining );
+
+        if ( source.Count == 0 || count <= 0 )
+        {
+            return ValueTask.FromResult( new ItemsProviderResult<Tweet>( [], VirtualFeedSize ) );
+        }
+
+        var tweets = Enumerable
+            .Range( request.StartIndex, count )
+            .Select( index => source[index % source.Count] )
+            .ToList();
+
+        return ValueTask.FromResult( new ItemsProviderResult<Tweet>( tweets, VirtualFeedSize ) );
+    }
 }

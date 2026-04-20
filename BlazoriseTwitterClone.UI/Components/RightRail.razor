@@ -1,4 +1,4 @@
-﻿<Div Width="Width.Px( 360 )" Padding="Padding.Is3.OnX.Is1.OnY" Flex="Flex.Column" Gap="Gap.Is3">
+<Div Width="Width.Px( 360 )" Height="Height.Vh( 100 )" Position="Position.Sticky.Top.Is0" Overflow="Overflow.Auto" Padding="Padding.Is3.OnX.Is1.OnY" Flex="Flex.Column" Gap="Gap.Is3">
     <TextInput Placeholder="Search" Role="TextRole.Search" />
 
     <Card Border="Border.Is1">
@@ -32,7 +32,7 @@
                                 @suggestion.Name
                                 @if ( suggestion.Verified )
                                 {
-                                    <Span TextColor="TextColor.Primary">●</Span>
+                                    <Span TextColor="TextColor.Primary">*</Span>
                                 }
                             </Div>
                             <Div TextSize="TextSize.Small" TextColor="TextColor.Muted">@suggestion.Handle</Div>
@@ -46,7 +46,7 @@
     </Card>
 
     <Div TextSize="TextSize.Small" TextColor="TextColor.Muted" Padding="Padding.Is2.OnX">
-        Terms of Service | Privacy Policy | Cookie Policy | More | © 2026 X Corp.
+        Terms of Service | Privacy Policy | Cookie Policy | More | (c) 2026 X Corp.
     </Div>
 </Div>
 
